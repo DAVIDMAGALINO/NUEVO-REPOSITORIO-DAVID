@@ -1,17 +1,30 @@
-def temperatura_promedio_ciudad(datos):
-    # datos es una lista de tuplas en el siguiente formato: (ciudad, [temperaturas semana 1, temperaturas semana 2, temperaturas semana 3, temperaturas semana 4])
+def temperatura_promedio(datos):
+    promedios = {}
 
-    for ciudad, temperaturas_semanales in datos:
-        temp_promedio = sum(temperaturas_semanales) / len(temperaturas_semanales)
-        print(f"La temperatura promedio de la ciudad {ciudad} es: {temp_promedio}")
+    for ciudad, semanas in datos.items():
+        total_temperaturas = 0
+        cantidad_dias = 0
+
+        for semana in semanas:
+            total_temperaturas += sum(semana)
+            cantidad_dias += len(semana)
+
+        promedio = total_temperaturas / cantidad_dias
+        promedios[ciudad] = promedio
+
+    return promedios
 
 
-# Ejemplo de uso
-datos = [("Ciudad A", [20, 22, 24, 23]),
-         ("Ciudad B", [18, 19, 20, 21]),
-         ("Ciudad C", [25, 28, 30, 27])]
+# Datos de temperaturas de ejemplo (ciudad: [temperaturas de cada semana])
+datos = {
+    'Ciudad A': [[20, 25, 22, 24, 23, 21, 26], [22, 24, 23, 26, 27, 25, 23]],
+    'Ciudad B': [[15, 18, 16, 20, 18], [19, 21, 22, 20, 23]],
+    'Ciudad C': [[25, 26, 27, 28, 29, 25, 30], [24, 23, 25, 26, 28, 27, 29]]
+}
 
-temperatura_promedio_ciudad(datos)
+resultados = temperatura_promedio(datos)
+for ciudad, promedio in resultados.items():
+    print(f"La temperatura promedio en {ciudad} es: {promedio}")
 temperaturas = [[[28, 30, 29, 27, 26, 25, 24],
                  [27, 29, 28, 26, 25, 26, 23],
                  [30, 31, 31, 30, 29, 28, 27]],
